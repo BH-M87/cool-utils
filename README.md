@@ -2,12 +2,10 @@
 
 Useful utils.
 
+![npm version](https://img.shields.io/npm/v/cool-utils.svg?style=flat)  ![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)
+
 ## Usage
 
 ```sh
-umi block https://github.com/https://github.com/BH-M87/cool-utils/tree/master/cool-utils
+npm install --save cool-utils
 ```
-
-## LICENSE
-
-MIT

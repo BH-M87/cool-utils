@@ -1,0 +1,32 @@
+{
+  "name": "@cool/utils",
+  "version": "0.0.1",
+  "description": "Useful utils.",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "authors": {
+    "name": "Xuheng Liu",
+    "email": "liuxuheng1990@gmail.com"
+  },
+  "repository": "https://github.com/BH-M87/cool-utils/cool-utils",
+  "scripts": {
+    "dev": "father doc dev",
+    "build": "father build"
+  },
+  "peerDependencies": {
+    "react": "16.x",
+    "isomorphic-fetch": "^2.2.1",
+    "lodash-es": "^4.17.15",
+    "url-search-params": "^1.1.0"
+  },
+  "devDependencies": {
+    "father": "^2.16.0",
+    "eslint": "^6.6.0",
+    "eslint-config-cool": "^0.3.2",
+    "react": "16.x",
+    "isomorphic-fetch": "^2.2.1",
+    "lodash-es": "^4.17.15",
+    "url-search-params": "^1.1.0"
+  },
+  "license": "MIT"
+}

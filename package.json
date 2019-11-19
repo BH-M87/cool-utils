@@ -1,5 +1,5 @@
 {
-  "name": "@cool/utils",
+  "name": "cool-utils",
   "version": "0.0.1",
   "description": "Useful utils.",
   "main": "dist/index.js",

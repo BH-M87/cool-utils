@@ -15,9 +15,7 @@
   },
   "peerDependencies": {
     "react": "16.x",
-    "isomorphic-fetch": "^2.2.1",
-    "lodash-es": "^4.17.15",
-    "url-search-params": "^1.1.0"
+    "lodash-es": "^4.17.15"
   },
   "devDependencies": {
     "father": "^2.16.0",
@@ -28,5 +26,10 @@
     "lodash-es": "^4.17.15",
     "url-search-params": "^1.1.0"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "classnames": "^2.2.6",
+    "isomorphic-fetch": "^2.2.1",
+    "url-search-params": "^1.1.0"
+  }
 }

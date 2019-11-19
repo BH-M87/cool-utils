@@ -2,7 +2,7 @@ import { isEmpty } from 'lodash-es';
 import fetch from 'isomorphic-fetch';
 import URLSearchParams from 'url-search-params';
 import history from '../history';
-import replacePlaceholder from './replacePlaceholder';
+import replacePlaceholder from '../replacePlaceholder';
 
 const CODE_MESSAGE = {
   200: '服务器成功返回请求的数据。',

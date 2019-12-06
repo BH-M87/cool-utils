@@ -1,4 +1,4 @@
-# @umi-material/cool-utils
+# cool-utils
 
 Useful utils.
 

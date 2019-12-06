@@ -41,11 +41,12 @@ export class Http {
       put: true,
       delete: true,
     },
-    correctErrCode: 200,
+    correctErrorCode: 200,
     requestInterval: 0,
     requestTimeout: 0,
     fetchRetryTimes: 0,
     codeMessage: CODE_MESSAGE,
+    urlPrefix: '',
   };
 
   set config(_commonConfig = {}) {
@@ -88,8 +89,8 @@ export class Http {
 
   checkErrCode(dataObj) {
     const { errorCode, data, errorMsg } = dataObj;
-    const { correctErrCode, notLoginInErrorCode } = this.commonConfig;
-    if (!errorCode || errorCode === correctErrCode) {
+    const { correctErrorCode, notLoginInErrorCode } = this.commonConfig;
+    if (!errorCode || errorCode === correctErrorCode) {
       return;
     }
     if (
@@ -204,7 +205,9 @@ export class Http {
 
   savedFetchRetryTimes = {};
 
-  async request(url, customOptions, headers = {}, config = {}) {
+  async request(_url, customOptions, headers = {}, config = {}) {
+    const { requestTimeout, fetchRetryTimes, throwError, urlPrefix } = this.commonConfig;
+    const url = `${urlPrefix}${_url}`;
     const options = {
       credentials: 'include',
       rejectUnauthorized: false,
@@ -215,7 +218,6 @@ export class Http {
       ...(options.headers || {}),
       ...(headers || {}),
     };
-    const { requestTimeout, fetchRetryTimes, throwError } = this.commonConfig;
     try {
       const response =
         requestTimeout > 0

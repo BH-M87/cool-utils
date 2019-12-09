@@ -88,22 +88,25 @@ export class Http {
   }
 
   checkErrCode(dataObj) {
-    const { errorCode, data, errorMsg } = dataObj;
+    const { data, errorCode, errCode, errorMsg, errMsg } = dataObj;
+    const eCode = errorCode || errCode || 0;
+    const eMsg = errorMsg || errMsg || 'No defined error message!';
     const { correctErrorCode, notLoginInErrorCode } = this.commonConfig;
-    if (!errorCode || errorCode === correctErrorCode) {
+    if (!eCode || eCode === correctErrorCode) {
       return;
     }
     if (
       notLoginInErrorCode instanceof RegExp
-        ? notLoginInErrorCode.test(errorCode)
-        : notLoginInErrorCode === errorCode
+        ? notLoginInErrorCode.test(eCode)
+        : notLoginInErrorCode === eCode
     ) {
-      this.notLoginIn(errorMsg);
+      this.notLoginIn(eMsg);
       return;
     }
-    const error = new Error(errorMsg);
-    error.errorCode = errorCode;
+    const error = new Error(eMsg);
     error.data = data;
+    error.errorCode = errorCode;
+    error.errCode = errCode;
     throw error;
   }
 
@@ -155,6 +158,7 @@ export class Http {
   objectToFormData = (obj, form, namespace) => {
     const fd = form || new FormData();
     let formKey;
+    // eslint-disable-next-line no-unused-vars
     for (const property in obj) {
       if (Object.prototype.hasOwnProperty.call(obj, property)) {
         if (namespace) {
@@ -268,7 +272,7 @@ export class Http {
       });
       query = `?${searchParams.toString()}`;
     }
-    return this.requestCache(`${api}${query}`, {}, headers, config);
+    return this.requestCache(`${api}${query}`, { method: 'GET' }, headers, config);
   }
 
   async post(postApi, postData = {}, customeHeaders = {}, config = {}) {

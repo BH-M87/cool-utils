@@ -13,6 +13,8 @@ export { default as isArray } from './utils/isArray';
 export { default as isBlob } from './utils/isBlob';
 export { default as isFile } from './utils/isFile';
 export { default as isFormData } from './utils/isFormData';
+export { default as isFunction } from './utils/isFunction';
 export { default as isObject } from './utils/isObject';
+export { default as isStream } from './utils/isStream';
 export { default as merge } from './utils/merge';
 export { default as objectToFormData } from './utils/objectToFormData';

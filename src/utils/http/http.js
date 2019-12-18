@@ -64,12 +64,17 @@ export class Http {
     const urlReg = /^https?:\/\/*/;
     if (loginPageUrl && urlReg.test(loginPageUrl)) {
       window.location.href = loginPageUrl;
-    } else if (
-      this.commonConfig.notLoginInUrl &&
-      history.location.pathname !== this.commonConfig.notLoginInUrl
-    ) {
+      return;
+    }
+    const { notLoginInUrl } = this.commonConfig;
+    if (!notLoginInUrl) {
+      return;
+    }
+    if (urlReg.test(notLoginInUrl)) {
+      window.location.href = `${notLoginInUrl}?redirectUrl=${window.location.href}`;
+    } else if (history.location.pathname !== notLoginInUrl) {
       history.push({
-        pathname: this.commonConfig.notLoginInUrl,
+        pathname: notLoginInUrl,
         search: `?redirectUrl=${history.location.pathname}${
           history.location.search.substr(1) ? `&${history.location.search.substr(1)}` : ''
         }`,

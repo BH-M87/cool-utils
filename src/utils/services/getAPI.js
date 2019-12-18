@@ -18,7 +18,7 @@ const parseKey = key => {
 const gen = param => {
   const { method, path } = parseKey(param);
   return function(data, headers, config) {
-    return http[method](path, pickBy(data, negate(isNil)), headers, config);
+    return http[method](path, data, headers, config);
   };
 };
 

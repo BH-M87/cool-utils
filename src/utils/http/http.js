@@ -1,6 +1,7 @@
-import { isEmpty } from 'lodash-es';
+import { isEmpty, omitBy } from 'lodash-es';
 import fetch from 'isomorphic-fetch';
 import URLSearchParams from 'url-search-params';
+import isArray from '../isArray';
 import history from '../history';
 import replacePlaceholder from '../replacePlaceholder';
 
@@ -47,6 +48,15 @@ export class Http {
     fetchRetryTimes: 0,
     codeMessage: CODE_MESSAGE,
     urlPrefix: '',
+    dataInterceptor: [
+      function omitNil(data) {
+        return omitBy(data, function isNil(value) {
+          return value === undefined || value === null;
+        });
+      },
+    ],
+    requestInterceptor: [],
+    responseInterceptor: [],
   };
 
   set config(_commonConfig = {}) {
@@ -152,15 +162,7 @@ export class Http {
     return this.csrfToken;
   }
 
-  replaceRESTfulPlaceholder = (api, data = {}) => {
-    const result = replacePlaceholder(api, /:\w+/g, data);
-    return {
-      api: result.string,
-      data: result.data,
-    };
-  };
-
-  objectToFormData = (obj, form, namespace) => {
+  objectToFormData(obj, form, namespace) {
     const fd = form || new FormData();
     let formKey;
     // eslint-disable-next-line no-unused-vars
@@ -187,7 +189,7 @@ export class Http {
     }
 
     return fd;
-  };
+  }
 
   requestPromises = new Map();
 
@@ -217,18 +219,29 @@ export class Http {
   async request(_url, customOptions, headers = {}, config = {}) {
     const { requestTimeout, fetchRetryTimes, throwError, urlPrefix } = this.commonConfig;
     const url = `${urlPrefix}${_url}`;
-    const options = {
-      credentials: 'include',
-      rejectUnauthorized: false,
-      ...customOptions,
-    };
-    options.headers = {
-      'x-requested-with': 'XMLHttpRequest',
-      ...(options.headers || {}),
-      ...(headers || {}),
-    };
+    const requestInterceptor = [
+      ...this.commonConfig.requestInterceptor,
+      ...(isArray(config.requestInterceptor) ? config.requestInterceptor : []),
+    ];
+    const responseInterceptor = [
+      ...this.commonConfig.responseInterceptor,
+      ...(isArray(config.responseInterceptor) ? config.responseInterceptor : []),
+    ];
+    const options = requestInterceptor.reduce(
+      (accumulator, interceptor) => interceptor(accumulator),
+      {
+        credentials: 'include',
+        rejectUnauthorized: false,
+        ...customOptions,
+        headers: {
+          'x-requested-with': 'XMLHttpRequest',
+          ...(customOptions.headers || {}),
+          ...(headers || {}),
+        },
+      },
+    );
     try {
-      const response =
+      const originalResponse =
         requestTimeout > 0
           ? await Promise.race([
               fetch(url, options),
@@ -239,6 +252,10 @@ export class Http {
               }),
             ])
           : await fetch(url, options);
+      const response = responseInterceptor.reduce(
+        (accumulator, interceptor) => interceptor(accumulator),
+        originalResponse,
+      );
       const processedResponse = await this.processResult(response);
       return processedResponse;
     } catch (error) {
@@ -262,8 +279,24 @@ export class Http {
     }
   }
 
+  interceptData(_api, _data, config) {    
+    const { string: api, data: replacedData } = replacePlaceholder(_api, /:\w+/g, _data);
+    const dataInterceptor = [
+      ...this.commonConfig.dataInterceptor,
+      ...(isArray(config.dataInterceptor) ? config.dataInterceptor : []),
+    ];
+    const data = dataInterceptor.reduce(
+      (accumulator, interceptor) => interceptor(accumulator),
+      replacedData,
+    );
+    return {
+      api,
+      data,
+    };
+  }
+
   async get(getApi, getData = {}, headers = {}, config = {}) {
-    const { api, data } = this.replaceRESTfulPlaceholder(getApi, getData);
+    const { api, data } = this.interceptData(getApi, getData, config);
     let query;
     if (isEmpty(data)) {
       query = '';
@@ -281,7 +314,7 @@ export class Http {
   }
 
   async post(postApi, postData = {}, customeHeaders = {}, config = {}) {
-    const { api, data } = this.replaceRESTfulPlaceholder(postApi, postData);
+    const { api, data } = this.interceptData(postApi, postData, config);
     const csrfToken = await this.getCsrfToken();
     const headers = {
       'content-type': 'application/json',
@@ -302,7 +335,7 @@ export class Http {
   }
 
   async delete(postApi, postData = {}, customeHeaders = {}, config = {}) {
-    const { api, data } = this.replaceRESTfulPlaceholder(postApi, postData);
+    const { api, data } = this.interceptData(postApi, postData, config);
     const csrfToken = await this.getCsrfToken();
     const headers = {
       'content-type': 'application/json',
@@ -323,7 +356,7 @@ export class Http {
   }
 
   async put(postApi, postData = {}, customeHeaders = {}, config = {}) {
-    const { api, data } = this.replaceRESTfulPlaceholder(postApi, postData);
+    const { api, data } = this.interceptData(postApi, postData, config);
     const csrfToken = await this.getCsrfToken();
     const headers = {
       'content-type': 'application/json',
@@ -344,7 +377,7 @@ export class Http {
   }
 
   async form(formApi, formData, customeHeaders = {}, config = {}) {
-    const { api, data } = this.replaceRESTfulPlaceholder(formApi, formData);
+    const { api, data } = this.interceptData(formApi, formData, config);
     const csrfToken = await this.getCsrfToken();
     const headers = {
       'x-csrf-token': csrfToken,

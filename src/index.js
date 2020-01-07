@@ -1,3 +1,4 @@
+export { default as axios } from './utils/axios';
 export { default as http, get, post, put, deleteMethod, form } from './utils/http';
 export { usePrevious, useCompare, useDifferentiation } from './utils/hooks';
 export { default as history } from './utils/history';

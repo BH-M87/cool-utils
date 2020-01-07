@@ -1,5 +1,6 @@
-/* eslint-disable no-param-reassign */
-export default axios => {
+import axios from 'axios';
+
+export default () => {
   // headers
   axios.defaults.headers.common = {
     ...axios.defaults.headers.common,
@@ -18,7 +19,7 @@ export default axios => {
     'content-type': 'application/json',
   };
   axios.defaults.headers.put = {
-    ...axios.defaults.headers.delete,
+    ...axios.defaults.headers.put,
     'content-type': 'application/json',
   };
   // withCredentials

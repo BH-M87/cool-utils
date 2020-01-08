@@ -9,6 +9,8 @@ setOptions();
 require('./libs/form');
 
 // request interceptors
+require('./interceptors/request/dataInterceptor');
+require('./interceptors/request/omitNilInterceptor');
 require('./interceptors/request/placeholderInterceptor');
 require('./interceptors/request/xsrfInterceptor');
 

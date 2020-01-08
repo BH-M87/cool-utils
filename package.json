@@ -14,23 +14,21 @@
     "build": "father build"
   },
   "peerDependencies": {
-    "react": "16.x",
-    "lodash-es": "^4.17.15"
+    "react": "16.x"
   },
   "devDependencies": {
     "father": "^2.16.0",
     "eslint": "^6.6.0",
     "eslint-config-cool": "^0.3.2",
     "react": "16.x",
-    "isomorphic-fetch": "^2.2.1",
-    "lodash-es": "^4.17.15",
-    "url-search-params": "^1.1.0"
+    "isomorphic-fetch": "^2.2.1"
   },
   "license": "MIT",
   "dependencies": {
     "axios": "^0.19.0",
     "classnames": "^2.2.6",
     "isomorphic-fetch": "^2.2.1",
+    "lodash-es": "^4.17.15",
     "url-search-params": "^1.1.0"
   }
 }

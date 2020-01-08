@@ -1,22 +1,22 @@
+/* eslint-disable import/first */
 import axios from 'axios';
-import setDefaults from './libs/setDefaults';
+import './libs/setDefaults';
 import setOptions from './libs/setOptions';
 
-setDefaults();
 setOptions();
 
 // add form method to axios
-require('./libs/form');
+import './libs/form';
 
 // request interceptors
-require('./interceptors/request/dataInterceptor');
-require('./interceptors/request/omitNilInterceptor');
-require('./interceptors/request/placeholderInterceptor');
-require('./interceptors/request/xsrfInterceptor');
+import './interceptors/request/dataInterceptor';
+import './interceptors/request/omitNilInterceptor';
+import './interceptors/request/placeholderInterceptor';
+import './interceptors/request/xsrfInterceptor';
 
 // response interceptors
-require('./interceptors/response/notLoginInterceptor');
-require('./interceptors/response/errorInterceptor');
-require('./interceptors/response/responseInterceptor');
+import './interceptors/response/notLoginInterceptor';
+import './interceptors/response/errorInterceptor';
+import './interceptors/response/responseInterceptor';
 
 export default axios;

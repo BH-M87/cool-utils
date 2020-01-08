@@ -1,8 +1,7 @@
 /* eslint-disable no-param-reassign */
 import axios from 'axios';
-import { pickBy } from 'lodash-es';
+import omitNil from '../../../omitNil';
 
-const omitNil = obj => pickBy(obj, value => value !== undefined && value !== null);
 axios.interceptors.request.use(
   function(config) {
     const { params, data } = config;

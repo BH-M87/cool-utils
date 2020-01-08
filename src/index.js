@@ -20,3 +20,4 @@ export { default as isObject } from './utils/isObject';
 export { default as isStream } from './utils/isStream';
 export { default as merge } from './utils/merge';
 export { default as objectToFormData } from './utils/objectToFormData';
+export { default as omitNil } from './utils/omitNil';

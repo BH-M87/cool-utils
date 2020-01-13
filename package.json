@@ -3,7 +3,7 @@
   "version": "0.1.2",
   "description": "Useful utils.",
   "main": "dist/index.js",
-  "module": "dist/index.esm.js",
+  "module": "es/index.js",
   "authors": {
     "name": "Xuheng Liu",
     "email": "liuxuheng1990@gmail.com"

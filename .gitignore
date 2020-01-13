@@ -1,5 +1,7 @@
 /yarn.lock
 /package-lock.json
 /dist
+/es
+/lib
 /.docz
 /node_modules

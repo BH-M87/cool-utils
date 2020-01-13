@@ -12,7 +12,7 @@
     "name": "Xuheng Liu",
     "email": "liuxuheng1990@gmail.com"
   },
-  "repository": "https://github.com/BH-M87/cool-utils/cool-utils",
+  "repository": "https://github.com/BH-M87/cool-utils",
   "scripts": {
     "dev": "father doc dev",
     "build": "father build"
@@ -24,8 +24,7 @@
     "father": "^2.16.0",
     "eslint": "^6.6.0",
     "eslint-config-cool": "^0.3.2",
-    "react": "16.x",
-    "isomorphic-fetch": "^2.2.1"
+    "react": "16.x"
   },
   "license": "MIT",
   "dependencies": {

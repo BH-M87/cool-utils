@@ -2,6 +2,7 @@
   "name": "cool-utils",
   "version": "0.2.0",
   "description": "Useful utils.",
+  "files": ["es", "dist"],
   "main": "dist/index.js",
   "module": "es/index.js",
   "authors": {

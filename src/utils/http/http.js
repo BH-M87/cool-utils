@@ -1,8 +1,6 @@
 import { isEmpty, omitBy } from 'lodash-es';
-import fetch from 'isomorphic-fetch';
 import URLSearchParams from 'url-search-params';
 import isArray from '../isArray';
-import history from '../history';
 import replacePlaceholder from '../replacePlaceholder';
 
 const CODE_MESSAGE = {
@@ -32,6 +30,18 @@ export class Http {
     },
     notLoginInErrorCode: /18003|18004/,
     notLoginInUrl: '/login',
+    notLoginCallback: function notLoginCallback(notLoginInUrl) {
+      const history = window.g_history;
+      if (!history) {
+        return;
+      }
+      history.push({
+        pathname: notLoginInUrl,
+        search: `?redirectUrl=${history.location.pathname}${
+          history.location.search.substr(1) ? `&${history.location.search.substr(1)}` : ''
+        }`,
+      });
+    },
     isResultCheck: true,
     parseResult: data => data && data.data,
     isGetParamJsonStringfy: false,
@@ -76,19 +86,14 @@ export class Http {
       window.location.href = loginPageUrl;
       return;
     }
-    const { notLoginInUrl } = this.commonConfig;
+    const { notLoginInUrl, notLoginCallback } = this.commonConfig;
     if (!notLoginInUrl) {
       return;
     }
     if (urlReg.test(notLoginInUrl)) {
       window.location.href = `${notLoginInUrl}?redirectUrl=${window.location.href}`;
-    } else if (history.location.pathname !== notLoginInUrl) {
-      history.push({
-        pathname: notLoginInUrl,
-        search: `?redirectUrl=${history.location.pathname}${
-          history.location.search.substr(1) ? `&${history.location.search.substr(1)}` : ''
-        }`,
-      });
+    } else if (window.location.pathname !== notLoginInUrl && notLoginCallback) {
+      notLoginCallback(notLoginInUrl);
     }
   }
 
@@ -279,7 +284,7 @@ export class Http {
     }
   }
 
-  interceptData(_api, _data, config) {    
+  interceptData(_api, _data, config) {
     const { string: api, data: replacedData } = replacePlaceholder(_api, /:\w+/g, _data);
     const dataInterceptor = [
       ...this.commonConfig.dataInterceptor,

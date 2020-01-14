@@ -8,6 +8,7 @@
   ],
   "main": "dist/index.js",
   "module": "es/index.js",
+  "sideEffects": false,
   "authors": {
     "name": "Xuheng Liu",
     "email": "liuxuheng1990@gmail.com"

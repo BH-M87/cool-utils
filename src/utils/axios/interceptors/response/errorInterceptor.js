@@ -3,10 +3,8 @@ import axios from 'axios';
 axios.interceptors.response.use(
   function(response) {
     const {
-      config: {
-        options: { parseResponse, correctErrorCode },
-      },
-    } = response;
+      options: { parseResponse, correctErrorCode },
+    } = axios.defaults;
     const { errorCode, errCode, errorMsg, errMsg } = parseResponse(response);
     const eCode = errorCode || errCode || 0;
     if (!eCode || eCode === correctErrorCode) {

@@ -3,7 +3,8 @@ import axios from 'axios';
 
 axios.interceptors.request.use(
   async function(config) {
-    const { options, method } = config;
+    const { options } = axios.defaults;
+    const { method } = config;
     if (!options.isXsrfOn || ['get', 'head'].includes(method)) {
       return config;
     }

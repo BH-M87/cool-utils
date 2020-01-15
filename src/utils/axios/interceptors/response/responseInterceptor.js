@@ -3,9 +3,9 @@ import parseResponse from '../../libs/parseResponse';
 
 axios.interceptors.response.use(parseResponse, function(error) {
   const {
-    config: {
-      options: { throwError },
-    },
+    options: { throwError },
+  } = axios.defaults;
+  const {
     request: { method, throwError: _throwError },
     response,
   } = error;

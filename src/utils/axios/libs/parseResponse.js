@@ -1,10 +1,10 @@
+import axios from 'axios';
+
 import isFunction from '../../isFunction';
 
 export default response => {
   const {
-    config: {
-      options: { parseResponse },
-    },
-  } = response;
+    options: { parseResponse },
+  } = axios.defaults;
   return isFunction(parseResponse) ? parseResponse(response) : response;
 };

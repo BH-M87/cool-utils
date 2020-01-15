@@ -10,7 +10,8 @@ axios.interceptors.response.use(
         toLoginPage(loginPage);
         return response;
       }
-      return Promise.reject(error);
+      // eslint-disable-next-line prefer-promise-reject-errors
+      return Promise.reject({ ...response, ...error });
     }
     return response;
   },

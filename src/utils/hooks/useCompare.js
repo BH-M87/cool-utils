@@ -5,7 +5,10 @@ import usePrevious from './usePrevious';
 export default function useCompare(...args) {
   const callback = args[args.length - 1];
   const vals = typeof callback === 'function' ? args.slice(0, args.length - 1) : args;
-  const prevVals = usePrevious(vals);
+  const prevVals = usePrevious(
+    vals,
+    vals.map(() => undefined),
+  );
   const isDifferent = !isEqual(prevVals, vals);
   if (isDifferent && typeof callback === 'function') {
     callback(...vals);

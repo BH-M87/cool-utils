@@ -5,10 +5,8 @@ axios.interceptors.response.use(parseResponse, function(error) {
   const {
     options: { throwError },
   } = axios.defaults;
-  const {
-    request: { method, throwError: _throwError },
-    response,
-  } = error;
+  const { request, config, response } = error;
+  const { method, throwError: _throwError } = config || request || {};
   if (
     _throwError !== false &&
     (_throwError || (typeof throwError === 'object' ? throwError[method] : throwError))

@@ -24,6 +24,7 @@ const CODE_MESSAGE = {
 export class Http {
   commonConfig = {
     csrf: false,
+    headers: {},
     errorHook: (error, url) => {
       // eslint-disable-next-line no-console
       console.warn(`Http Request Error in '${url}':`, error);
@@ -222,7 +223,13 @@ export class Http {
   savedFetchRetryTimes = {};
 
   async request(_url, customOptions, headers = {}, config = {}) {
-    const { requestTimeout, fetchRetryTimes, throwError, urlPrefix } = this.commonConfig;
+    const {
+      requestTimeout,
+      fetchRetryTimes,
+      throwError,
+      urlPrefix,
+      headers: commonHeaders,
+    } = this.commonConfig;
     const url = `${urlPrefix}${_url}`;
     const requestInterceptor = [
       ...this.commonConfig.requestInterceptor,
@@ -240,6 +247,7 @@ export class Http {
         ...customOptions,
         headers: {
           'x-requested-with': 'XMLHttpRequest',
+          ...(commonHeaders || {}),
           ...(customOptions.headers || {}),
           ...(headers || {}),
         },

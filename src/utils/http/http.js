@@ -31,6 +31,7 @@ export class Http {
     },
     notLoginInErrorCode: /18003|18004/,
     notLoginInUrl: '/login',
+    notLoginHook: null,
     notLoginCallback: function notLoginCallback(notLoginInUrl) {
       const history = window.g_history;
       if (!history) {
@@ -83,11 +84,15 @@ export class Http {
 
   notLoginIn(loginPageUrl) {
     const urlReg = /^https?:\/\/*/;
+    const { notLoginInUrl, notLoginCallback, notLoginHook } = this.commonConfig;
+    if (notLoginHook) {
+      notLoginHook();
+      return;
+    }
     if (loginPageUrl && urlReg.test(loginPageUrl)) {
       window.location.href = loginPageUrl;
       return;
     }
-    const { notLoginInUrl, notLoginCallback } = this.commonConfig;
     if (!notLoginInUrl) {
       return;
     }
@@ -109,11 +114,11 @@ export class Http {
   }
 
   checkErrCode(dataObj) {
-    const { data, errorCode, errCode, errorMsg, errMsg } = dataObj;
-    const eCode = errorCode || errCode || 0;
-    const eMsg = errorMsg || errMsg || 'No defined error message!';
+    const { data, errorCode, errCode, errorMsg, errMsg, code, msg } = dataObj;
+    const eCode = errorCode || errCode || code || 0;
+    const eMsg = errorMsg || errMsg || msg || 'No defined error message!';
     const { correctErrorCode, notLoginInErrorCode } = this.commonConfig;
-    if (!eCode || eCode === correctErrorCode) {
+    if (Number(eCode) === 0 || eCode === correctErrorCode) {
       return;
     }
     if (

@@ -1,3 +1,6 @@
+import isFunction from '../isFunction';
+import isObject from '../isObject';
+
 const parseKey = key => {
   let method = 'get';
   let path = key;
@@ -15,7 +18,16 @@ const parseKey = key => {
 const gen = (param, library) => {
   const { method, path } = parseKey(param);
   return function(data, headers, config) {
-    return library[method](path, data, headers, config);
+    if (isFunction(library)) {
+      return library({ method, path, data, headers, config });
+    }
+    if (isObject(library) && isFunction(library[method])) {
+      return library[method](path, data, headers, config);
+    }
+    return () => {
+      console.warn(`No library found, params are : ${{ method, path, data, headers, config }}`);
+      return null;
+    };
   };
 };
 

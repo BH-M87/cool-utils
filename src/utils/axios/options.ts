@@ -38,7 +38,7 @@ export default {
   correctErrorCode: 200,
   notLoginErrorCode: /18003|18004/,
   loginPage: '/login',
-  parseResponse: (data?: Response) => data && data.data,
+  parseResponse: (data?: Response) => data?.data,
   throwError: {
     get: false,
     post: true,

@@ -1,5 +1,4 @@
 import axios, { AxiosResponse, Options } from 'axios';
-
 import isFunction from '../../isFunction';
 
 export default (response: AxiosResponse) => {

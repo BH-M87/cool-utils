@@ -12,7 +12,8 @@ import responseInterceptor from '../interceptors/response/responseInterceptor';
 
 export default (config: AxiosRequestConfig = {}) => {
   const axiosInstance = axios.create(config);
-
+  // copy options from static axios to axios instance
+  axiosInstance.defaults.options = axios.defaults.options;
   dataInterceptor(axiosInstance);
   omitNilInterceptor(axiosInstance);
   placeholderInterceptor(axiosInstance);

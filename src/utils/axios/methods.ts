@@ -9,6 +9,9 @@ import isObject from '../isObject';
 // }
 
 export function get(api: string | AxiosRequestConfig, params = {}, headers = {}, config = {}) {
+  if (!api) {
+    return undefined;
+  }
   return axios(
     isObject(api)
       ? {
@@ -16,6 +19,7 @@ export function get(api: string | AxiosRequestConfig, params = {}, headers = {},
           ...(api as AxiosRequestConfig),
         }
       : {
+          url: api as string,
           method: 'get',
           params,
           headers,
@@ -25,6 +29,9 @@ export function get(api: string | AxiosRequestConfig, params = {}, headers = {},
 }
 
 export function post(api: string | AxiosRequestConfig, data = {}, headers = {}, config = {}) {
+  if (!api) {
+    return undefined;
+  }
   return axios(
     isObject(api)
       ? {
@@ -32,6 +39,7 @@ export function post(api: string | AxiosRequestConfig, data = {}, headers = {}, 
           ...(api as AxiosRequestConfig),
         }
       : {
+          url: api as string,
           method: 'post',
           data,
           headers,
@@ -46,6 +54,9 @@ export function deleteMethod(
   headers = {},
   config = {},
 ) {
+  if (!api) {
+    return undefined;
+  }
   return axios(
     isObject(api)
       ? {
@@ -53,6 +64,7 @@ export function deleteMethod(
           ...(api as AxiosRequestConfig),
         }
       : {
+          url: api as string,
           method: 'delete',
           data,
           headers,
@@ -62,6 +74,9 @@ export function deleteMethod(
 }
 
 export function put(api: string | AxiosRequestConfig, data = {}, headers = {}, config = {}) {
+  if (!api) {
+    return undefined;
+  }
   return axios(
     isObject(api)
       ? {
@@ -69,6 +84,7 @@ export function put(api: string | AxiosRequestConfig, data = {}, headers = {}, c
           ...(api as AxiosRequestConfig),
         }
       : {
+          url: api as string,
           method: 'put',
           data,
           headers,
@@ -78,6 +94,9 @@ export function put(api: string | AxiosRequestConfig, data = {}, headers = {}, c
 }
 
 export function form(api: string | AxiosRequestConfig, data = {}, headers = {}, config = {}) {
+  if (!api) {
+    return undefined;
+  }
   return isObject(api)
     ? axios.form(
         (api as AxiosRequestConfig).url || '',

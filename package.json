@@ -1,13 +1,14 @@
 {
   "name": "cool-utils",
-  "version": "0.2.11",
+  "version": "1.0.4",
   "description": "Useful utils.",
   "files": [
     "es",
     "dist"
   ],
   "main": "dist/index.js",
-  "module": "es/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
   "sideEffects": false,
   "authors": {
     "name": "Xuheng Liu",
@@ -22,10 +23,15 @@
     "react": "16.x"
   },
   "devDependencies": {
-    "father": "^2.16.0",
+    "@types/classnames": "^2.2.10",
+    "@types/lodash-es": "^4.17.3",
+    "@types/url-search-params": "^1.1.0",
     "eslint": "^6.6.0",
     "eslint-config-cool": "^0.3.2",
-    "react": "16.x"
+    "father": "^2.16.0",
+    "react": "16.x",
+    "tslint": "^6.1.2",
+    "typescript": "^3.9.6"
   },
   "license": "MIT",
   "dependencies": {

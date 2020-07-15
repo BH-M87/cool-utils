@@ -1,7 +1,7 @@
 import './libs/setDefaults';
-import setOptions from './libs/setOptions';
+import setAxiosOptions from './libs/setAxiosOptions';
 
-setOptions();
+setAxiosOptions();
 
 import getAxiosInstance from './libs/getAxiosInstance';
 

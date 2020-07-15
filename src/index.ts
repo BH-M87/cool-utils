@@ -6,6 +6,7 @@ export {
   deleteMethod as axiosDelete,
   form as axiosForm,
   axiosMethods,
+  setAxiosOptions,
 } from './utils/axios';
 export { default as http, get, post, put, deleteMethod, form } from './utils/http';
 export { usePrevious, useCompare, useDifferentiation } from './utils/hooks';

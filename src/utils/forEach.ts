@@ -12,12 +12,12 @@ import isArray from './isArray';
  * @param {Object|Array} obj The object to iterate
  * @param {Function} fn The callback to invoke for each item
  */
-function forEach(obj: AnyObject, fn: (value: any, key: string, obj: AnyObject) => void): void;
-function forEach(obj: any[], fn: (value: any, key: number, obj: any[]) => void): void;
-function forEach(obj: any, fn: Function): void {
+function forEach(obj: AnyObject, fn: (value: any, key: string, obj: AnyObject) => void): AnyObject;
+function forEach(obj: any[], fn: (value: any, key: number, obj: any[]) => void): any[];
+function forEach(obj: any, fn: Function): any {
   // Don't bother if no value provided
   if (obj === null || typeof obj === 'undefined') {
-    return;
+    return obj;
   }
 
   // Force an array if not already something iterable
@@ -40,6 +40,7 @@ function forEach(obj: any, fn: Function): void {
       }
     }
   }
+  return obj;
 }
 
 export default forEach;

@@ -21,10 +21,6 @@ type Response = {
 };
 export default {
   statusMessage: STATUS_MESSAGE,
-  errorHook: (error?: Error, url?: string) => {
-    // eslint-disable-next-line no-console
-    console.warn(`Http Request Error in '${url}':`, error);
-  },
   // xsrf
   isXsrfOn: false,
   xsrfToken: undefined, // can pass static xsrf token, not recommend

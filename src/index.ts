@@ -9,7 +9,7 @@ export {
   setAxiosOptions,
 } from './utils/axios';
 export { default as http, get, post, put, deleteMethod, form } from './utils/http';
-export { usePrevious, useCompare, useDifferentiation } from './utils/hooks';
+export { usePrevious, usePreviousProp, useCompare, useDifferentiation } from './utils/hooks';
 export { default as genAPI } from './utils/services/genAPI';
 export { default as getAPI } from './utils/services/getAPI';
 export { default as generateAPI } from './utils/services/generateAPI';

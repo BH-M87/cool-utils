@@ -1,18 +1,22 @@
 import { AxiosRequestConfig } from 'axios';
 import axios from './axios';
 import isObject from '../isObject';
+import addXRequestedWith from './libs/addXRequestedWith';
 
 // interface API {
 //   method: 'get' | 'post' | 'delete' | 'put' | 'form';
 //   url: string;
 //   data: any;
 // }
+export function request(options: AxiosRequestConfig) {
+  return axios(addXRequestedWith(options));
+}
 
 export function get(api: string | AxiosRequestConfig, params = {}, headers = {}, config = {}) {
   if (!api) {
     return undefined;
   }
-  return axios(
+  return request(
     isObject(api)
       ? {
           method: 'get',
@@ -32,7 +36,7 @@ export function post(api: string | AxiosRequestConfig, data = {}, headers = {}, 
   if (!api) {
     return undefined;
   }
-  return axios(
+  return request(
     isObject(api)
       ? {
           method: 'post',
@@ -57,7 +61,7 @@ export function deleteMethod(
   if (!api) {
     return undefined;
   }
-  return axios(
+  return request(
     isObject(api)
       ? {
           method: 'delete',
@@ -77,7 +81,7 @@ export function put(api: string | AxiosRequestConfig, data = {}, headers = {}, c
   if (!api) {
     return undefined;
   }
-  return axios(
+  return request(
     isObject(api)
       ? {
           method: 'put',
